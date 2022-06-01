@@ -1,4 +1,4 @@
-# Baseline select_one field
+# Conjoint Analysis
 
 ![Default appearance for the 'baseline-select_one' field plug-in](extras/baseline-select_one.jpg)
 
