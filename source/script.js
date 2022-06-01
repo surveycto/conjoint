@@ -1,7 +1,7 @@
 /* global fieldProperties, setAnswer, goToNextField, clearAnswer, setMetaData, getPluginParameter */
 
-// var load_form_attributes = getPluginParameter('attributes');
-// var attribute_array = load_form_attributes.split(',');
+var load_form_attributes = getPluginParameter('attributes');
+var attribute_array = load_form_attributes.split(',');
 // var attribute_array = load_attributes
 // console.log('Attributes ' + load_attributes.toString())
 // var load_values = getPluginParameter('values')
@@ -10,7 +10,7 @@
 // var values_array = load_values
 
 // Replace values of array with attribute names
-var attribute_array = ['Religion', 'Tribe', 'Party', 'Actions-public', 'Actions-private', 'Promises'];
+// var attribute_array = ['Religion', 'Tribe', 'Party', 'Actions-public', 'Actions-private', 'Promises'];
 // Replace values of array with attribute values
 // For text values
 var values_array = [['Christian', 'Muslim'], ['Sukuma', 'Chagga'], ['CCM', 'Opposition'], ['Gave nothing to your community', 'Gave money to your community'], ['Gave you nothing', 'Gave you money'], ['Has promises but no plan', 'Has promises and a plan']];
