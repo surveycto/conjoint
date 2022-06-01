@@ -4,21 +4,24 @@ var load_form_attributes = getPluginParameter('attributes');
 var attribute_array = load_form_attributes.split(',');
 // var attribute_array = load_attributes
 // console.log('Attributes ' + load_attributes.toString())
-// var load_values = getPluginParameter('values')
+var load_form_values = getPluginParameter('values')
 // console.log('Values ' + load_values.toString())
-// var values_array = (new Function("return [" + load_values+ "];")());
+var values_array = (new Function("return [" + load_form_values+ "];")());
 // var values_array = load_values
 
+/** Test stuff - Please do not delete */
 // Replace values of array with attribute names
 // var attribute_array = ['Religion', 'Tribe', 'Party', 'Actions-public', 'Actions-private', 'Promises'];
 // Replace values of array with attribute values
 // For text values
-var values_array = [['Christian', 'Muslim'], ['Sukuma', 'Chagga'], ['CCM', 'Opposition'], ['Gave nothing to your community', 'Gave money to your community'], ['Gave you nothing', 'Gave you money'], ['Has promises but no plan', 'Has promises and a plan']];
+// var values_array = [['Christian', 'Muslim'], ['Sukuma', 'Chagga'], ['CCM', 'Opposition'], ['Gave nothing to your community', 'Gave money to your community'], ['Gave you nothing', 'Gave you money'], ['Has promises but no plan', 'Has promises and a plan']];
 // For image values uncomment the below and replace with the url to your images 
 // Note: this only works online, if you want it to work offline, you'll need to store images
 // locally and then use the path to the local image rather than the url.
 // If you would like to use either an image or text, just use either the url string or regular string where appropriate.
 // var values_array = [['https://example.com/image/christian.jpg', 'https://example.com/image/muslim.jpg'], ['https://example.com/image/sukuma.jpg', 'https://example.com/image/chagga.jpg'], ['https://example.com/image/ccm.jpg', 'https://example.com/image/opposition.jpg'], ['https://example.com/image/nothing.jpg', 'https://example.com/image/something.jpg'], ['https://example.com/image/you-nothing.jpg', 'https://example.com/image/you-something.jpg'], ['https://example.com/image/no-plan.jpg', 'https://example.com/image/plan.jpg']];
+/** End test stuff */ 
+
 var buttons = document.querySelectorAll('input[name="opt"]')
 
 if (attribute_array.length !== values_array.length) {
