@@ -1,7 +1,7 @@
 {
-	"name" : "Baseline select_one field",
+	"name" : "Conjoint Analysis",
 	"author" : "Dobility",
-	"version": "3.4.2",
+	"version": "1.0.1",
 	"supportedFieldTypes": ["select_one"],
 	"hideDefaultRequiredMessage": false,
 	"hideDefaultConstraintMessage": false

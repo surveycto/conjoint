@@ -1,78 +1,77 @@
-/* global fieldProperties, setAnswer, goToNextField, clearAnswer */
+/* global fieldProperties, setAnswer, goToNextField, clearAnswer, setMetaData, getPluginParameter */
 
-// References to the supported choice containers
-var radioButtonsContainer = document.getElementById('radio-buttons-container') // default radio buttons
-var selectDropDownContainer = document.getElementById('select-dropdown-container') // minimal appearance
-var likertContainer = document.getElementById('likert-container') // likert
+// var load_form_attributes = getPluginParameter('attributes');
+// var attribute_array = load_form_attributes.split(',');
+// var attribute_array = load_attributes
+// console.log('Attributes ' + load_attributes.toString())
+// var load_values = getPluginParameter('values')
+// console.log('Values ' + load_values.toString())
+// var values_array = (new Function("return [" + load_values+ "];")());
+// var values_array = load_values
 
-// Detect right-to-left languages
-function isRTL (s) {
-  var ltrChars = 'A-Za-z\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02B8\u0300-\u0590\u0800-\u1FFF' + '\u2C00-\uFB1C\uFDFE-\uFE6F\uFEFD-\uFFFF'
-  var rtlChars = '\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC'
-  var rtlDirCheck = new RegExp('^[^' + ltrChars + ']*[' + rtlChars + ']')
+// Replace values of array with attribute names
+var attribute_array = ['Religion', 'Tribe', 'Party', 'Actions-public', 'Actions-private', 'Promises'];
+// Replace values of array with attribute values
+// For text values
+var values_array = [['Christian', 'Muslim'], ['Sukuma', 'Chagga'], ['CCM', 'Opposition'], ['Gave nothing to your community', 'Gave money to your community'], ['Gave you nothing', 'Gave you money'], ['Has promises but no plan', 'Has promises and a plan']];
+// For image values uncomment the below and replace with the url to your images 
+// Note: this only works online, if you want it to work offline, you'll need to store images
+// locally and then use the path to the local image rather than the url.
+// If you would like to use either an image or text, just use either the url string or regular string where appropriate.
+// var values_array = [['https://example.com/image/christian.jpg', 'https://example.com/image/muslim.jpg'], ['https://example.com/image/sukuma.jpg', 'https://example.com/image/chagga.jpg'], ['https://example.com/image/ccm.jpg', 'https://example.com/image/opposition.jpg'], ['https://example.com/image/nothing.jpg', 'https://example.com/image/something.jpg'], ['https://example.com/image/you-nothing.jpg', 'https://example.com/image/you-something.jpg'], ['https://example.com/image/no-plan.jpg', 'https://example.com/image/plan.jpg']];
+var buttons = document.querySelectorAll('input[name="opt"]')
 
-  return rtlDirCheck.test(s)
+if (attribute_array.length !== values_array.length) {
+  alert("Your attributes array and values array do not match.");
+}
+var numbers_array = [];
+for (var i = 0; i < attribute_array.length; i++) {
+  numbers_array.push(i);
 }
 
-// Prepare the current webview, making adjustments for any appearance options
-
-// minimal appearance
-if (fieldProperties.APPEARANCE.includes('minimal') === true) {
-  radioButtonsContainer.parentElement.removeChild(radioButtonsContainer) // remove the default radio buttons
-  likertContainer.parentElement.removeChild(likertContainer) // remove the likert container
-  selectDropDownContainer.style.display = 'block' // show the select dropdown
-} else if (fieldProperties.APPEARANCE.includes('likert') === true) { // likert appearance
-  radioButtonsContainer.parentElement.removeChild(radioButtonsContainer) // remove the default radio buttons
-  selectDropDownContainer.parentElement.removeChild(selectDropDownContainer) // remove the select dropdown container
-  likertContainer.style.display = 'flex' // show the likert container
-  // likert-min appearance
-  if (fieldProperties.APPEARANCE.includes('likert-min') === true) {
-    var likertChoices = document.getElementsByClassName('likert-choice-container')
-    for (var i = 1; i < likertChoices.length - 1; i++) {
-      likertChoices[i].querySelector('.likert-choice-label').style.display = 'none' // hide all choice labels except the first and last
-    }
-    likertChoices[0].querySelector('.likert-choice-label').classList.add('likert-min-choice-label-first') // apply a special class to the first choice label
-    likertChoices[likertChoices.length - 1].querySelector('.likert-choice-label').classList.add('likert-min-choice-label-last') // apply a special class to the last choice label
-  }
-} else { // all other appearances
-  if (fieldProperties.LANGUAGE !== null && isRTL(fieldProperties.LANGUAGE)) {
-    radioButtonsContainer.dir = 'rtl'
-  }
-
-  selectDropDownContainer.parentElement.removeChild(selectDropDownContainer) // remove the select dropdown container
-  likertContainer.parentElement.removeChild(likertContainer) // remove the likert container
-  // quick appearance
-  if (fieldProperties.APPEARANCE.includes('quick') === true) {
-    var choiceContainers = document.getElementsByClassName('choice-container') // go through all the available choices
-    for (var i = 0; i < choiceContainers.length; i++) {
-      choiceContainers[i].classList.add('appearance-quick') // add the 'appearance-quick' class
-      choiceContainers[i].getElementsByClassName('choice-label-text')[0].insertAdjacentHTML('beforeend', '<svg class="quick-appearance-icon"><use xlink:href="#quick-appearance-icon" /></svg>') // insert the 'quick' icon
-    }
-  }
+if (!sessionStorage.random_result) {
+  sessionStorage.random_result = shuffle(numbers_array);
 }
 
-// Define what happens when the user attempts to clear the response
+var random_result = sessionStorage.random_result.split(',');
+console.log(random_result.toString())
+    
+// Replace the round number with round number you are on
+fill_table(1);
 
-function clearAnswer () {
-  // minimal appearance
-  if (fieldProperties.APPEARANCE.includes('minimal') === true) {
-    selectDropDownContainer.value = ''
-  } else if (fieldProperties.APPEARANCE.includes('likert') === true) { // likert appearance
-    var selectedOption = document.querySelector('.likert-input-button.selected')
+for (var i = 0; i < buttons.length; i++) {
+  buttons[i].onchange = function () {
+    // remove 'selected' class from a previously selected option (if any)
+    var selectedOption = document.querySelector('.choice-container.selected')
     if (selectedOption) {
       selectedOption.classList.remove('selected')
     }
-  } else { // all other appearances
-    var selectedOption = document.querySelector('input[name="opt"]:checked')
-    if (selectedOption) {
-      selectedOption.checked = false
-      selectedOption.parentElement.classList.remove('selected')
-    }
+    this.parentElement.classList.add('selected') // add 'selected' class to the new selected option
+    change.apply(this) // call the change() function and tell it which value was selected
   }
 }
 
-// Save the user's response (update the current answer)
+// Functions
+function shuffle(array){
+  var currentIndex = array.length, temporaryValue, randomIndex ;
 
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+
+// Save the user's response (update the current answer)
 function change () {
   setAnswer(this.value)
   // If the appearance is 'quick', then also progress to the next field
@@ -80,44 +79,70 @@ function change () {
     goToNextField()
   }
 }
-// minimal appearance
-if (fieldProperties.APPEARANCE.includes('minimal') === true) {
-  selectDropDownContainer.onchange = change // when the select dropdown is changed, call the change() function (which will update the current value)
-} else if (fieldProperties.APPEARANCE.includes('likert') === true) { // likert appearance
-  var likertButtons = document.querySelectorAll('div[name="opt"]')
-  for (var i = 0; i < likertButtons.length; i++) {
-    likertButtons[i].onclick = function () {
-      // clear previously selected option (if any)
-      var selectedOption = document.querySelector('.likert-input-button.selected')
-      if (selectedOption) {
-        selectedOption.classList.remove('selected')
-      }
-      this.classList.add('selected') // mark clicked option as selected
-      change.apply({ value: this.getAttribute('data-value') }) // call the change() function and tell it which value was selected
-    }
-  }
-} else { // all other appearances
-  var buttons = document.querySelectorAll('input[name="opt"]')
-  for (var i = 0; i < buttons.length; i++) {
-    buttons[i].onchange = function () {
-      // remove 'selected' class from a previously selected option (if any)
-      var selectedOption = document.querySelector('.choice-container.selected')
-      if (selectedOption) {
-        selectedOption.classList.remove('selected')
-      }
-      this.parentElement.classList.add('selected') // add 'selected' class to the new selected option
-      change.apply(this) // call the change() function and tell it which value was selected
-    }
-  }
-}
 
-// If the field label or hint contain any HTML that isn't in the form definition, then the < and > characters will have been replaced by their HTML character entities, and the HTML won't render. We need to turn those HTML entities back to actual < and > characters so that the HTML renders properly. This will allow you to render HTML from field references in your field label or hint.
-function unEntity (str) {
-  return str.replace(/&lt;/g, '<').replace(/&gt;/g, '>')
-}
-if (fieldProperties.LABEL) {
-  document.querySelector('.label').innerHTML = unEntity(fieldProperties.LABEL)
-}
-if (fieldProperties.HINT) {
-  document.querySelector('.hint').innerHTML = unEntity(fieldProperties.HINT)
+function fill_table(number) {
+    
+  var table_element = document.getElementById("conjoint_table_" + number);
+  
+  var label = "Rd_" + (number) + "_";
+  
+  // Rows
+  for (var i = 0;i<random_result.length;i++) {
+    var row_element = document.createElement("TR");
+    
+    // Row cells
+    for (var j=0;j<3;j++) {
+      var data_element = document.createElement("TD");
+      
+      var random_value = random_result[i];
+      
+      if (j !== 0) {
+        var random_values_array = [];
+        for (var x = 0; x < values_array[random_value].length; x++) {
+          random_values_array.push(x);
+        }
+        var random_index = shuffle(random_values_array);
+        var value = values_array[random_value];
+        var attributeValue = value[random_index[0]];
+        var text;
+
+        // Conditional to check if value is string or url
+        // Note: this is a simple check, if your data is more 
+        // complex than use a regex.
+        // Also, if you are doing it offline, this check will NOT work
+        // you must instead write the conditional to check for a 
+        // local file, likely in the file directory of device or tmp.
+        // For example, instead of checking for 'http', you might check for 'file:'
+        if (attributeValue.indexOf('http') !== -1) {
+          text = document.createElement('img');
+          text.src = attributeValue;
+          text.height = '150' // height of image in pixels
+          text.width = '150' // width of image in pixels
+        } else {
+          text = document.createTextNode(attributeValue);
+        }
+        
+        // If you want to use different choice names in your embedded data, change the values below
+        if (j === 1) {
+          var choice = "A";
+        } else {
+          var choice = "B";
+        }
+        var new_label = label + choice + "_" + attribute_array[random_value];
+        var metaDataStore = new_label + "|" + attributeValue;
+        setMetaData(metaDataStore);
+      } else {
+        var text = document.createElement("B");
+        var bolded_text = document.createTextNode(attribute_array[random_value]);
+
+        text.appendChild(bolded_text);
+      }
+      
+      data_element.appendChild(text); 
+      row_element.appendChild(data_element);
+    }
+  
+    table_element.appendChild(row_element);   
+  }
+  
 }

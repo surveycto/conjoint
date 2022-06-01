@@ -23,6 +23,19 @@
 
 <div class="hint default-hint-text-size" dir="auto">{{{HINT}}}</div>
 
+
+<!-- Replace text between <h4> with round title -->
+  <h4>Round 1</h4>
+  <!-- Replace the number in the id tag with the round you're on -->
+  <table id="conjoint_table_1" class="conjoint-table">
+    <tr>
+      <th></th>
+      <!-- Replace text between <b> with text of choice names -->
+      <th><b>A</b></th>
+      <th><b>B</b></th>
+    </tr>
+  </table>
+
 <!-- This is the input area that will be shown by default -->
 <form class="choices-container" id="radio-buttons-container" dir="auto">
   {{#CHOICES}}
@@ -49,7 +62,7 @@
 </form>
 
 <!-- This is what will be shown if the field has the 'minimal' appearance -->
-<select class="choices-container default-answer-text-size" id="select-dropdown-container" dir="auto">
+<!-- <select class="choices-container default-answer-text-size" id="select-dropdown-container" dir="auto">
   <option value="">
     {{#QUESTION_PLACEHOLDER_LABEL}}
       {{QUESTION_PLACEHOLDER_LABEL}}
@@ -65,10 +78,10 @@
     {{CHOICE_LABEL}}
   </option>
   {{/CHOICES}}
-</select>
+</select> -->
 
 <!-- This is what will be shown if the field has the 'likert' appearance -->
-<div class="likert-choices-container" id="likert-container">
+<!-- <div class="likert-choices-container" id="likert-container">
   {{#CHOICES}}
   <div class="likert-choice-container">
     <div class="likert-input-button-container">
@@ -85,11 +98,11 @@
         {{{CHOICE_LABEL}}}
       </div>
       <!-- if there's a choice image, show that image-->
-      {{#CHOICE_IMAGE}}<img src="{{CHOICE_IMAGE}}" class="likert-choice-label-image" />{{/CHOICE_IMAGE}}
+      <!-- {{#CHOICE_IMAGE}}<img src="{{CHOICE_IMAGE}}" class="likert-choice-label-image" />{{/CHOICE_IMAGE}}
     </label>
   </div>
   {{/CHOICES}}
-</div>
+</div> -->
 
 <!-- You can define svg icons here that you want to use in the rest of the template. In this case, the icon here is what will be used for the 'quick' appearance. -->
 <svg class="symbol">
