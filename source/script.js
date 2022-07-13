@@ -6,7 +6,7 @@ var attribute_array = load_form_attributes.split(',');
 // console.log('Attributes ' + load_attributes.toString())
 var load_form_values = getPluginParameter('values')
 // console.log('Values ' + load_values.toString())
-var values_array = (new Function("return [" + load_form_values+ "];")());
+var values_array = (new Function("return [" + load_form_values + "];")());
 // var values_array = load_values
 
 /** Test stuff - Please do not delete */
