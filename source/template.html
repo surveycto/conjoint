@@ -31,7 +31,7 @@
     <th id="header2"><b></b></th>
   </tr>
 </table>
-<hr>
+<br>
 
   <button id="button1" onclick="addResult1()" class="cs-button"></button>
   <button id="button2" onclick="addResult2()" class="cs-button"></button>
@@ -41,34 +41,4 @@
   <a href="https://button.2.com/" class="scto-button">Button 2</a> -->
   
 </center>
-
-<!-- If the field is marked read only, then only show the input box if there is a current answer. -->
-{{#READONLY}}
-    <input 
-        type="text" 
-        value="{{CURRENT_ANSWER}}" 
-        id="text-field" 
-        class="response default-answer-text-size" 
-        dir="auto"
-        readonly
-        {{^CURRENT_ANSWER}}style="display:none"{{/CURRENT_ANSWER}}
-    />
-{{/READONLY}}
-
-<!-- if the field is not marked read only, show the input box always. -->
-{{^READONLY}}
-<input 
-    type="text" 
-    value="{{CURRENT_ANSWER}}" 
-    id="text-field" 
-    class="response default-answer-text-size" 
-    {{#QUESTION_PLACEHOLDER_LABEL}}
-      placeholder="{{QUESTION_PLACEHOLDER_LABEL}}"
-    {{/QUESTION_PLACEHOLDER_LABEL}}
-    {{^QUESTION_PLACEHOLDER_LABEL}}
-      placeholder="Your answer here..."
-    {{/QUESTION_PLACEHOLDER_LABEL}}
-    dir="auto"
-/>
-{{/READONLY}}
 
