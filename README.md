@@ -1,79 +1,66 @@
-# Baseline select_one field
+# Conjoint Analysis
 
-![Default appearance for the 'baseline-select_one' field plug-in](extras/baseline-select_one.jpg)
-
-| likert | minimal | quick |
-| --- | --- | --- |
-| <img src="extras/baseline-select_one-likert.jpg" alt="likert appearance" title="likert appearance" width="100px"/> | <img src="extras/baseline-select_one-minimal.jpg" alt="minimal appearance" title="minimal appearance" width="100px"/> | <img src="extras/baseline-select_one-quick.jpg" alt="quick appearance" title="quick appearance" width="100px"/> |
+![Default appearance for the 'conjoint' field plug-in](extras/baseline-select_one.jpg)
 
 ## Description
 
-A simple replacement for the default *select_one* field, plus a few improvements (see below). You can either download and use this as-is, or you can use it as a starting template when creating your own field plug-in for a *select_one* field.
-
+This field plug-in is designed to help implement [Conjoint Analysis](https://en.wikipedia.org/wiki/Conjoint_analysis) a popular market research technique that helps determine how people value different attributes of a product or service. The plug-in seeks to provide an easy and convenient way to set up this within SurveyCTO.
 [![Download now](extras/download-button.png)](https://github.com/surveycto/baseline-select_one/raw/master/baseline-select_one.fieldplugin.zip)
 
 ### Features
 
-In addition to supporting the default SurveyCTO features listed below, this field plug-in offers the following expanded functionality:
 
-* **Support for RTL languages** <br>
-    If your *label*, *hint*, or choice labels are in a language that uses a right-to-left alphabet (like Arabic), they will be right-justified, and the radio buttons will be to the right of the choice labels. If your form contains both right-to-left and left-to-right choice labels, the formatting will respond to the currently-selected form language.
-* **Support for HTML in choice labels** <br>
-    This plug-in will allow HTML in choice labels to be rendered as HTML, even in Collect on Android and iOS.
-* **Support for HTML in field references** <br>
-    If you reference another field's value in either the field *label* or field *hint*, and that referenced value contains HTML, the HTML will be correctly rendered.
 
 ### Data format
 
-This field plug-in requires the `select_one` field type.
+This field plug-in supports the `text` field type. The field stores a pipe (|) separated list of the the options presented to the respondant and the choice selected. For example: 
+
+`Bread, Bagel,Hero|Cheese,Cheddar,Mozzarella|Greens,Spinach,Arugala|Meat, Portobello,Roast beef|Sauce,Mustard,Mayonnaise|Veggie,Pickles,Pickles|Option 1`
+
+Here, it means the options were presented as follows: 
+
+| --- | Option 1 | Option 2 |
+| --- | --- | --- |
+| Bread | Bagel | Hero|
+| Cheese | Cheddar | Mozzarella |
+| Greens | Spinach | Arugala |
+| Meat | Portobello | Roast beef |
+| Sauce | Mustard | Mayonnaise |
+| Veggie | Pickles | Pickles |
+
+And the selected option was `Option 1`.
+
+Each field will be presented this way.
 
 ## How to use
 
 ### Getting started
 
-**To use this plug-in as-is**, just download the [baseline-select_one.fieldplugin.zip](https://github.com/surveycto/baseline-select_one/raw/master/baseline-select_one.fieldplugin.zip) file from this repo, specify this field plug-in as a custom field *appearance* in the form design (like in [the test form](https://github.com/surveycto/baseline-select_one/raw/master/extras/test-form/test-form-package-baseline-select_one.zip)), and attach it to your form. For more details about using field plug-ins, please read the [user documentation](https://docs.surveycto.com/02-designing-forms/03-advanced-topics/06.using-field-plug-ins.html).
+1. Download the sample form from this repo and upload it to your SurveyCTO server.
+2. Download the conjoint.fieldplugin.zip file from this repo, and attach it to the test form on your SurveyCTO server.
+3. Make sure to provide the correct parameters (see below).
 
-**To create your own** field plug-in using this as a template, follow these steps:
+### Parameters
 
-1. Fork this repo
-1. Make changes to the files in the `source` directory.  
-    * **Note:** be sure to update the `manifest.json` file as well.
-1. Zip the updated contents of the `source` directory.
-1. Rename the .zip file to *yourpluginname*.fieldplugin.zip (replace *yourpluginname* with the name you want to use for your plug-in).
-1. You may then attach your new .fieldplugin.zip file to your form as normal.
-
-For more information about developing your own field plug-ins, please read the [developer documentation](https://github.com/surveycto/Field-plug-in-resources).
-
-### Default SurveyCTO feature support
-
-| Feature / Property | Support |
+| Key | Value |
 | --- | --- |
-| Supported field type(s) | `select_one`|
-| Default values | Yes |
-| Custom constraint message | Yes |
-| Custom required message | Yes |
-| Read only | Yes |
-| media:image | Yes |
-| media:audio | Yes |
-| media:video | Yes |
-| `quick` appearance | Yes |
-| `minimal` appearance | Yes |
-| `compact` appearance | No |
-| `compact-#` appearance | No |
-| `quickcompact` appearance | No |
-| `quickcompact-#` appearance | No |
-| `likert` appearance | Yes |
-| `likert-min` appearance | Yes* |
-| `likert-mid` appearance | No |
+| `attributes` | Comma separated list of attributes |
+| `levels` | This should have two parts. The full string should include a pipe separated list of levels for each attribute. The levels for each attribute will be a comma separated list |
+| `labels` | A comma separated list of labels. These will appear as table headers and as button labels. For now, these can only be two |
+| `randomize` (Optional) | Indicates whether the attributes should be randomized or not. By default attributes are not randomized, they appear in a fixed order. Set this to `1` to have the attributes randomized |
 
-**Note:** this plug-in works well for the `likert-min` *appearance* when the field label is short, and does not contain an image, audio, or video. This is a known limitation currently.
+### Examples
+
+Examples of usage are: 
+
+`custom-conjoint(attributes = ${attributes}, levels = ${levels_array}, labels=${labels})`
+
 
 ## More resources
 
-* **Test form**  
+* **Sample form**  
 This form will help you explore the differences between this field plug-in and the default text field.  
-[Download test form package](https://github.com/surveycto/baseline-select_one/raw/master/extras/test-form/test-form-package-baseline-select_one.zip)  
-[Instructions for test form](/extras/test-form/README.md)
+[Download sample form](https://github.com/surveycto/baseline-select_one/raw/master/extras/test-form/test-form-package-baseline-select_one.zip)  
 
 * **Developer documentation**  
 Instructions and resources for developing your own field plug-ins.  
