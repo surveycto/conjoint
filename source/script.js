@@ -1,151 +1,254 @@
-/* global fieldProperties, setAnswer, goToNextField, clearAnswer, setMetaData, getPluginParameter */
+/* global fieldProperties, setAnswer, getPluginParameter, goToNextField, clearAnswer, setMetaData, getPluginParameter */
 
-var load_form_attributes = getPluginParameter('attributes');
-var attribute_array = load_form_attributes.split(',');
-// var attribute_array = load_attributes
-// console.log('Attributes ' + load_attributes.toString())
-var load_form_values = getPluginParameter('values')
-// console.log('Values ' + load_values.toString())
-var values_array = (new Function("return [" + load_form_values + "];")());
-// var values_array = load_values
-
-/** Test stuff - Please do not delete */
-// Replace values of array with attribute names
-// var attribute_array = ['Religion', 'Tribe', 'Party', 'Actions-public', 'Actions-private', 'Promises'];
-// Replace values of array with attribute values
-// For text values
-// var values_array = [['Christian', 'Muslim'], ['Sukuma', 'Chagga'], ['CCM', 'Opposition'], ['Gave nothing to your community', 'Gave money to your community'], ['Gave you nothing', 'Gave you money'], ['Has promises but no plan', 'Has promises and a plan']];
-// For image values uncomment the below and replace with the url to your images 
-// Note: this only works online, if you want it to work offline, you'll need to store images
-// locally and then use the path to the local image rather than the url.
-// If you would like to use either an image or text, just use either the url string or regular string where appropriate.
-// var values_array = [['https://example.com/image/christian.jpg', 'https://example.com/image/muslim.jpg'], ['https://example.com/image/sukuma.jpg', 'https://example.com/image/chagga.jpg'], ['https://example.com/image/ccm.jpg', 'https://example.com/image/opposition.jpg'], ['https://example.com/image/nothing.jpg', 'https://example.com/image/something.jpg'], ['https://example.com/image/you-nothing.jpg', 'https://example.com/image/you-something.jpg'], ['https://example.com/image/no-plan.jpg', 'https://example.com/image/plan.jpg']];
-/** End test stuff */ 
-
-var buttons = document.querySelectorAll('input[name="opt"]')
-
-if (attribute_array.length !== values_array.length) {
-  alert("Your attributes array and values array do not match.");
+// Set number of choices
+var numChoice = 1
+var result = ""
+// Get attributes from form definition
+var loadFormAttributes = getPluginParameter('attributes')
+// Convert loaded attributes into an array
+var attributeArray = loadFormAttributes.split(',')
+// Get randomize parameter from form definition
+var loadRandomizeOption = getPluginParameter('randomize')
+// Check value of randomize 
+if (loadRandomizeOption === 1) {
+  var randomizeAttributes = true;
 }
-var numbers_array = [];
-for (var i = 0; i < attribute_array.length; i++) {
-  numbers_array.push(i);
+// var attributeArray = [" Bread " , " Cheese " , " Greens " , " Meat " , " Sauce " , " Veggie " ];
+// Get attribute levels from form. 
+var loadAttributeLevels = getPluginParameter('levels') // levels1 | levels2 |levels3. .  
+// Create array of levels resulting in [levels1, levels2, levels3. . .]
+var attributeLevels = loadAttributeLevels.split('|') 
+// Store an array of arrays - each level will have an array for that level
+var levels = []
+// Create array variables for each set of levels
+for (var b = 0; b < attributeLevels.length; b++) {
+  levels[b] = attributeLevels[b].split(',')
 }
 
-if (!sessionStorage.random_result) {
-  sessionStorage.random_result = shuffle(numbers_array);
+var loadLabels = getPluginParameter('labels')
+if (loadLabels == undefined) {
+  var loadedLabels = ['Profile 1', 'Profile 2']
+} else {
+  var loadedLabels = loadLabels.split(',')
 }
 
-var random_result = sessionStorage.random_result.split(',');
-console.log(random_result.toString())
-    
-// Replace the round number with round number you are on
-fill_table(1);
+var button1 = document.getElementById('button1')
+button1.innerHTML = loadedLabels[0]
+var button2 = document.getElementById('button2')
+button2.innerHTML = loadedLabels[1]
+var header1 = document.getElementById('header1')
+header1.innerHTML = loadedLabels[0]
+var header2 = document.getElementById('header2')
+header2.innerHTML = loadedLabels[1]
 
-for (var i = 0; i < buttons.length; i++) {
-  buttons[i].onchange = function () {
-    // remove 'selected' class from a previously selected option (if any)
-    var selectedOption = document.querySelector('.choice-container.selected')
-    if (selectedOption) {
-      selectedOption.classList.remove('selected')
+// Arrays containing all attribute levels
+// var breadArray = [" Bagel " , " Hero " , " Roll " , " Sliced white " , " Tortilla " , " Lettuce wrap " ]
+// var cheeseArray = [" Cheddar " , " Gouda " , " Jack " , " Mozzarella " , " Provolone " , " None " ]
+// var greenArray = [" Arugala " , " Green lettuce " , " Red lettuce " , " Spinach " ]
+// var meatArray = [" Ham " , " Roast beef " , " Turkey " , " Portobello " , " Egg " , " Bean patty " ]
+// var sauceArray = [" Hot sauce " , " Mayonnaise " , " Mustard " , " Oil and vinegar " , " None " ]
+// var veggieArray = [" Tomato " , " Jalapenos " , " Roasted peppers " , " Onion " , " Olives " , " Bean sprouts " , " Pickles " , " Avocado " ]
+
+// Fisher-Yates shuffle
+function shuffle(array) {
+  for (var i = array.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1))
+    var temp = array[i]
+    array[i] = array[j]
+    array[j] = temp
+  }
+  return array
+}
+
+// Shuffle an array and choose the first entry
+function shuffle_one(theArray) {
+  var out = shuffle(theArray)
+  var out = out[0]
+  return (out)
+}
+
+function randomize(i) {
+  // Get table element
+  var tableElement = document.getElementById("conjoint_table_" + i);
+
+  // var attributeOrder = [1 ,2 ,3 ,4 ,5 ,6]
+  // Get order of attributes
+  var attributeOrder = [] // Array to store order of attributes
+  // Generate order of attributes. By default this is a fixed order
+  for (var a = 1; a <= attributeArray.length; a++) {
+    attributeOrder.push(a)
+  } // Will result in ordered array starting at 1 upto total number of attributes
+
+  // Active if attributes are to be shown randomly. 
+  if(randomizeAttributes) {
+    shuffle(attributeOrder)
+  }
+  
+  // var s1 = [ shuffle_one ( breadArray ) , shuffle_one ( cheeseArray ) , shuffle_one ( greenArray ) , shuffle_one ( meatArray ) , shuffle_one ( sauceArray ) , shuffle_one ( veggieArray ) ]
+  // var s2 = [ shuffle_one ( breadArray ) , shuffle_one ( cheeseArray ) , shuffle_one ( greenArray ) , shuffle_one ( meatArray ) , shuffle_one ( sauceArray ) , shuffle_one ( veggieArray ) ] 
+  
+  var s1 = []
+  var s2 = []
+  for (var c = 0; c < attributeLevels.length; c++) {
+    s1.push(shuffle_one(levels[c]))
+    s2.push(shuffle_one(levels[c]))
+  }
+
+  for(var k = 1; k <= attributeOrder.length; k++) {
+    var index = attributeOrder[k - 1] - 1
+    var rowElement = document.createElement("TR");
+    var labelCell = document.createElement("TD");
+    var label = document.createElement("b");
+    label.innerHTML = attributeArray[index]
+    labelCell.appendChild(label)
+    var option1Cell = document.createElement("TD");
+    var option1 = document.createTextNode(s1[index])
+    option1Cell.appendChild(option1)
+    var option2Cell = document.createElement("TD");
+    var option2 = document.createTextNode(s2[index])
+    option2Cell.appendChild(option2)
+
+    k === 1 ? result = attributeArray[index] + ',' + s1[index] + ',' + s2[index] + '|' : result += attributeArray[index] + ',' + s1[index] + ',' + s2[index] + '|'
+
+    rowElement.appendChild(labelCell)
+    rowElement.appendChild(option1Cell)
+    rowElement.appendChild(option2Cell)
+
+    tableElement.appendChild(rowElement)
+  }
+
+  setMetaData(result)
+  console.log(result)
+}
+
+// Perform the randomization and save it
+for (var i = 1; i <= numChoice; i++) {
+  randomize(i);
+}
+
+function addResult1() {
+  result += loadedLabels[0]
+  setAnswer(result)
+  goToNextField()
+}
+
+function addResult2() {
+  result += loadedLabels[1]
+  setAnswer(result)
+  goToNextField()
+}
+
+// PROCESSING
+// Detect platform
+var isWebCollect = (document.body.className.indexOf('web-collect') >= 0)
+var isAndroid = (document.body.className.indexOf('android-collect') >= 0)
+var isIOS = (document.body.className.indexOf('ios-collect') >= 0)
+
+// Find the input element
+var input = document.getElementById('text-field')
+
+// Restricts input for the given textbox to the given inputFilter.
+function setInputFilter (textbox, inputFilter) {
+  function restrictInput () {
+    if (inputFilter(this.value)) {
+      this.oldSelectionStart = this.selectionStart
+      this.oldSelectionEnd = this.selectionEnd
+      this.oldValue = this.value
+    } else if (this.hasOwnProperty('oldValue')) {
+      this.value = this.oldValue
+      this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd)
+    } else {
+      this.value = ''
     }
-    this.parentElement.classList.add('selected') // add 'selected' class to the new selected option
-    change.apply(this) // call the change() function and tell it which value was selected
   }
+
+  // Apply restriction when typing, copying/pasting, dragging-and-dropping, etc.
+  textbox.addEventListener('input', restrictInput)
+  textbox.addEventListener('keydown', restrictInput)
+  textbox.addEventListener('keyup', restrictInput)
+  textbox.addEventListener('mousedown', restrictInput)
+  textbox.addEventListener('mousedown', restrictInput)
+  textbox.addEventListener('contextmenu', restrictInput)
+  textbox.addEventListener('drop', restrictInput)
 }
 
-// Functions
-function shuffle(array){
-  var currentIndex = array.length, temporaryValue, randomIndex ;
+// If the field label or hint contain any HTML that isn't in the form definition, then the < and > characters will have been replaced by their HTML character entities, and the HTML won't render. We need to turn those HTML entities back to actual < and > characters so that the HTML renders properly. This will allow you to render HTML from field references in your field label or hint.
+function unEntity (str) {
+  return str.replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+}
+if (fieldProperties.LABEL) {
+  document.querySelector('.label').innerHTML = unEntity(fieldProperties.LABEL)
+}
+if (fieldProperties.HINT) {
+  document.querySelector('.hint').innerHTML = unEntity(fieldProperties.HINT)
+}
 
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
+// Define what happens when the user attempts to clear the response
+function clearAnswer () {
+  input.value = ''
+}
 
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
+// If the field is not marked readonly, then focus on the field and show the on-screen keyboard (for mobile devices)
+function setFocus () {
+  if (!fieldProperties.READONLY) {
+    input.focus()
+    if (window.showSoftKeyboard) {
+      window.showSoftKeyboard()
+    }
   }
-
-  return array;
 }
 
 // Save the user's response (update the current answer)
-function change () {
-  setAnswer(this.value)
-  // If the appearance is 'quick', then also progress to the next field
-  if (fieldProperties.APPEARANCE.includes('quick') === true) {
-    goToNextField()
-  }
+input.oninput = function () {
+  setAnswer(input.value)
 }
 
-function fill_table(number) {
-    
-  var table_element = document.getElementById("conjoint_table_" + number);
-  
-  var label = "Rd_" + (number) + "_";
-  
-  // Rows
-  for (var i = 0;i<random_result.length;i++) {
-    var row_element = document.createElement("TR");
-    
-    // Row cells
-    for (var j=0;j<3;j++) {
-      var data_element = document.createElement("TD");
-      
-      var random_value = random_result[i];
-      
-      if (j !== 0) {
-        var random_values_array = [];
-        for (var x = 0; x < values_array[random_value].length; x++) {
-          random_values_array.push(x);
-        }
-        var random_index = shuffle(random_values_array);
-        var value = values_array[random_value];
-        var attributeValue = value[random_index[0]];
-        var text;
+// check for standard appearance options and apply them
+if (fieldProperties.APPEARANCE.includes('numbers_phone') === true) {
+  input.type = 'tel'
+} else if (fieldProperties.APPEARANCE.includes('numbers_decimal') === true) {
+  input.pattern = '[0-9]*'
 
-        // Conditional to check if value is string or url
-        // Note: this is a simple check, if your data is more 
-        // complex than use a regex.
-        // Also, if you are doing it offline, this check will NOT work
-        // you must instead write the conditional to check for a 
-        // local file, likely in the file directory of device or tmp.
-        // For example, instead of checking for 'http', you might check for 'file:'
-        if (attributeValue.indexOf('http') !== -1) {
-          text = document.createElement('img');
-          text.src = attributeValue;
-          text.height = '150' // height of image in pixels
-          text.width = '150' // width of image in pixels
-        } else {
-          text = document.createTextNode(attributeValue);
-        }
-        
-        // If you want to use different choice names in your embedded data, change the values below
-        if (j === 1) {
-          var choice = "A";
-        } else {
-          var choice = "B";
-        }
-        var new_label = label + choice + "_" + attribute_array[random_value];
-        var metaDataStore = new_label + "|" + attributeValue;
-        setMetaData(metaDataStore);
-      } else {
-        var text = document.createElement("B");
-        var bolded_text = document.createTextNode(attribute_array[random_value]);
-
-        text.appendChild(bolded_text);
-      }
-      
-      data_element.appendChild(text); 
-      row_element.appendChild(data_element);
+  // Set/remove the 'inputmode'.
+  function setInputMode (attributeValue) {
+    if (attributeValue === null) {
+      input.removeAttribute('inputmode')
+    } else {
+      input.setAttribute('inputmode', attributeValue)
     }
-  
-    table_element.appendChild(row_element);   
   }
-  
+
+  setInputMode('numeric')
+
+  // For iOS, we'll default the inputmode to 'numeric' (as defined above), unless some specific value is
+  // passed as plug-in parameter.
+  if (isIOS) {
+    var inputModeIOS = getPluginParameter('inputmode-ios')
+    if (inputModeIOS !== undefined) {
+      setInputMode(inputModeIOS)
+    }
+  } else if (isAndroid) {
+    // For Android, we'll default the inputmode to 'numeric' (as defined above),
+    // unless some specific value is passed as plug-in parameter.
+    var inputModeAndroid = getPluginParameter('inputmode-android')
+    if (inputModeAndroid !== undefined) {
+      setInputMode(inputModeAndroid)
+    }
+  } else if (isWebCollect) {
+    // For WebCollect, we'll default the inputmode to 'numeric' (as defined above),
+    // unless some specific value is passed as plug-in parameter.
+    var inputModeWebCollect = getPluginParameter('inputmode-web')
+    if (inputModeWebCollect !== undefined) {
+      setInputMode(inputModeWebCollect)
+    }
+  }
+
+  // If the field is not marked as readonly, then restrict input to decimal only.
+  if (!fieldProperties.READONLY) {
+    setInputFilter(input, function (value) {
+      return /^-?\d*[.,]?\d*$/.test(value)
+    })
+  }
+} else if (fieldProperties.APPEARANCE.includes('numbers') === true) {
+  input.type = 'number'
 }
