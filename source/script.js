@@ -2,7 +2,8 @@
 
 // Set number of choices
 var numChoice = 1
-var result = ""
+var tempResult = ""
+
 // Get attributes from form definition
 var loadFormAttributes = getPluginParameter('attributes')
 // Convert loaded attributes into an array
@@ -110,7 +111,7 @@ function randomize(i) {
     var option2 = document.createTextNode(s2[index])
     option2Cell.appendChild(option2)
 
-    k === 1 ? result = attributeArray[index] + ',' + s1[index] + ',' + s2[index] + '|' : result += attributeArray[index] + ',' + s1[index] + ',' + s2[index] + '|'
+    k === 1 ? tempResult = attributeArray[index] + ',' + s1[index] + ',' + s2[index] + '|' : tempResult += attributeArray[index] + ',' + s1[index] + ',' + s2[index] + '|'
 
     rowElement.appendChild(labelCell)
     rowElement.appendChild(option1Cell)
@@ -119,8 +120,8 @@ function randomize(i) {
     tableElement.appendChild(rowElement)
   }
 
-  setMetaData(result)
-  console.log(result)
+  // setMetaData(result)
+  // console.log(result)
 }
 
 // Perform the randomization and save it
@@ -133,7 +134,8 @@ for (var i = 1; i <= numChoice; i++) {
 }
 
 function addResult1() {
-  result += loadedLabels[0]
+  var result = ""
+  result = tempResult + loadedLabels[0]
   setAnswer(result)
   button1.style.backgroundColor = "#4CAF50"
   button2.style.backgroundColor = "#008CBA"
@@ -141,7 +143,8 @@ function addResult1() {
 }
 
 function addResult2() {
-  result += loadedLabels[1]
+  var result = ""
+  result = tempResult + loadedLabels[1]
   setAnswer(result)
   button2.style.backgroundColor = "#4CAF50"
   button1.style.backgroundColor = "#008CBA"
@@ -194,13 +197,14 @@ function recreateTable(i) {
 //   randomize(i);
 // }
 
-function addResult1() {
-  result += loadedLabels[0]
-  setAnswer(result)
-  button1.style.backgroundColor = "#4CAF50"
-  button2.style.backgroundColor = "#008CBA"
-  // goToNextField()
-}
+// function addResult1() {
+//   var result = ""
+//   result += loadedLabels[0]
+//   setAnswer(result)
+//   button1.style.backgroundColor = "#4CAF50"
+//   button2.style.backgroundColor = "#008CBA"
+//   // goToNextField()
+// }
 
 function disableButtons() {
   button1.disabled = true;
