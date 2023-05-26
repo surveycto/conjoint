@@ -2,7 +2,8 @@
 
 // Set number of choices
 var numChoice = 1
-var result = ""
+var tempResult = ""
+
 // Get attributes from form definition
 var loadFormAttributes = getPluginParameter('attributes')
 // Convert loaded attributes into an array
@@ -40,6 +41,8 @@ var header1 = document.getElementById('header1')
 header1.innerHTML = loadedLabels[0]
 var header2 = document.getElementById('header2')
 header2.innerHTML = loadedLabels[1]
+
+var currentAnswer = fieldProperties.CURRENT_ANSWER
 
 // Arrays containing all attribute levels
 // var breadArray = [" Bagel " , " Hero " , " Roll " , " Sliced white " , " Tortilla " , " Lettuce wrap " ]
@@ -108,7 +111,7 @@ function randomize(i) {
     var option2 = document.createTextNode(s2[index])
     option2Cell.appendChild(option2)
 
-    k === 1 ? result = attributeArray[index] + ',' + s1[index] + ',' + s2[index] + '|' : result += attributeArray[index] + ',' + s1[index] + ',' + s2[index] + '|'
+    k === 1 ? tempResult = attributeArray[index] + ',' + s1[index] + ',' + s2[index] + '|' : tempResult += attributeArray[index] + ',' + s1[index] + ',' + s2[index] + '|'
 
     rowElement.appendChild(labelCell)
     rowElement.appendChild(option1Cell)
@@ -117,23 +120,97 @@ function randomize(i) {
     tableElement.appendChild(rowElement)
   }
 
-  setMetaData(result)
-  console.log(result)
+  // setMetaData(result)
+  // console.log(result)
 }
 
 // Perform the randomization and save it
 for (var i = 1; i <= numChoice; i++) {
-  randomize(i);
+  if (currentAnswer !== null) {
+    recreateTable(i);
+  } else {
+    randomize(i);
+  }
 }
 
 function addResult1() {
-  result += loadedLabels[0]
+  var result = ""
+  result = tempResult + loadedLabels[0]
   setAnswer(result)
-  goToNextField()
+  button1.style.backgroundColor = "#4CAF50"
+  button2.style.backgroundColor = "#008CBA"
+  // goToNextField()
 }
 
 function addResult2() {
-  result += loadedLabels[1]
+  var result = ""
+  result = tempResult + loadedLabels[1]
   setAnswer(result)
-  goToNextField()
+  button2.style.backgroundColor = "#4CAF50"
+  button1.style.backgroundColor = "#008CBA"
+  // goToNextField()
+}
+
+// If a there is already has a response create a table not to be edited
+function recreateTable(i) {
+  // Get table element
+  var tableElement = document.getElementById("conjoint_table_" + i);
+  // Keep the same answer for the result
+  result = currentAnswer 
+  // Keep the same answer for the result
+  var currentAnswerArray = currentAnswer.split('|')
+
+  for(var l = 0; l < currentAnswerArray.length; l++) {
+    if (l === (currentAnswerArray.length - 1)) {
+      if(currentAnswerArray[currentAnswerArray.length - 1] === loadedLabels[0]) {
+        button1.innerHTML = loadedLabels[0]
+        disableButtons()
+      } else {
+        button2.innerHTML = loadedLabels[1]
+        disableButtons()
+      }
+    } else {
+      var currentItem = currentAnswerArray[l].split(',')
+      var rowElement = document.createElement("TR");
+      var labelCell = document.createElement("TD");
+      var label = document.createElement("b");
+      label.innerHTML = currentItem[0]
+      labelCell.appendChild(label)
+      var option1Cell = document.createElement("TD");
+      var option1 = document.createTextNode(currentItem[1])
+      option1Cell.appendChild(option1)
+      var option2Cell = document.createElement("TD");
+      var option2 = document.createTextNode(currentItem[2])
+      option2Cell.appendChild(option2)
+  
+      rowElement.appendChild(labelCell)
+      rowElement.appendChild(option1Cell)
+      rowElement.appendChild(option2Cell)
+  
+      tableElement.appendChild(rowElement)
+    }
+  }
+}
+
+// Perform the randomization and save it
+// for (var i = 1; i <= numChoice; i++) {
+//   randomize(i);
+// }
+
+// function addResult1() {
+//   var result = ""
+//   result += loadedLabels[0]
+//   setAnswer(result)
+//   button1.style.backgroundColor = "#4CAF50"
+//   button2.style.backgroundColor = "#008CBA"
+//   // goToNextField()
+// }
+
+function disableButtons() {
+  button1.disabled = true;
+  button2.disabled = true;
+  button1.style.backgroundColor = "#e7e7e7"
+  button2.style.backgroundColor = "#e7e7e7"
+  button1.style.color = "#555555"
+  button2.style.color = "#555555"
 }

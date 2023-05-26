@@ -1,6 +1,6 @@
 # Conjoint Analysis
 
-![Default appearance for the 'conjoint' field plug-in](extras/baseline-select_one.jpg)
+![Default appearance for the 'conjoint' field plug-in](extras/conjoint.png)
 
 ## Description
 
@@ -13,9 +13,9 @@ This field plug-in is designed to help implement [Conjoint Analysis](https://en.
 
 ### Data format
 
-This field plug-in supports the `text` field type. The field stores a pipe (|) separated list of the the options presented to the respondant and the choice selected. For example: 
+This field plug-in supports the `select_one` field type. The field stores a pipe (|) separated list of the the options presented to the respondant and the choice selected. For example: 
 
-`Bread, Bagel,Hero|Cheese,Cheddar,Mozzarella|Greens,Spinach,Arugala|Meat, Portobello,Roast beef|Sauce,Mustard,Mayonnaise|Veggie,Pickles,Pickles|Option 1`
+`Bread,Bagel,Hero|Cheese,Cheddar,Mozzarella|Greens,Spinach,Arugala|Meat,Portobello,Roast beef|Sauce,Mustard,Mayonnaise|Veggie,Pickles,Pickles|Option 1`
 
 Here, it means the options were presented as follows: 
 
@@ -46,7 +46,7 @@ Each field will be presented this way.
 | --- | --- |
 | `attributes` | Comma separated list of attributes |
 | `levels` | This should have two parts. The full string should include a pipe separated list of levels for each attribute. The levels for each attribute will be a comma separated list |
-| `labels` | A comma separated list of labels. These will appear as table headers and as button labels. For now, these can only be two |
+| `labels` | A comma separated list of labels. These will appear as table headers and as button labels. For now, these can only be two labels |
 | `randomize` (Optional) | Indicates whether the attributes should be randomized or not. By default attributes are not randomized, they appear in a fixed order. Set this to `1` to have the attributes randomized |
 
 ### Examples
