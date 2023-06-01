@@ -5,7 +5,8 @@
 ## Description
 
 This field plug-in is designed to help implement [Conjoint Analysis](https://en.wikipedia.org/wiki/Conjoint_analysis) a popular market research technique that helps determine how people value different attributes of a product or service. The plug-in seeks to provide an easy and convenient way to set up this within SurveyCTO.
-[![Download now](extras/download-button.png)](https://github.com/surveycto/baseline-select_one/raw/master/baseline-select_one.fieldplugin.zip)
+
+[![Download now](extras/beta-release-download.jpg)](https://github.com/surveycto/conjoint/blob/master/conjoint.fieldplugin.zip)
 
 ### Features
 
@@ -19,7 +20,7 @@ This field plug-in supports the `text` field type. The field stores a pipe (|) s
 
 Here, it means the options were presented as follows: 
 
-| --- | Option 1 | Option 2 |
+|  | Option 1 | Option 2 |
 | --- | --- | --- |
 | Bread | Bagel | Hero|
 | Cheese | Cheddar | Mozzarella |
@@ -36,8 +37,8 @@ Each field will be presented this way.
 
 ### Getting started
 
-1. Download the sample form from this repo and upload it to your SurveyCTO server.
-2. Download the conjoint.fieldplugin.zip file from this repo, and attach it to the test form on your SurveyCTO server.
+1. Download the [sample form](https://github.com/surveycto/conjoint/blob/master/extras/Sample%20form%20Conjoint%20Analysis.xlsx) from this repo and upload it to your SurveyCTO server.
+2. Download the [conjoint.fieldplugin.zip file](https://github.com/surveycto/conjoint/blob/master/conjoint.fieldplugin.zip) from this repo, and attach it to the test form on your SurveyCTO server.
 3. Make sure to provide the correct parameters (see below).
 
 ### Parameters
@@ -46,7 +47,7 @@ Each field will be presented this way.
 | --- | --- |
 | `attributes` | Comma separated list of attributes |
 | `levels` | This should have two parts. The full string should include a pipe separated list of levels for each attribute. The levels for each attribute will be a comma separated list |
-| `labels` | A comma separated list of labels. These will appear as table headers and as button labels. For now, these can only be two labels |
+| `labels` (Optional) | A comma separated list of labels. These will appear as table headers and as button labels. For now, there can only be two labels. The default labels are _Porfile 1_ and _Profile 2_. |
 | `randomize` (Optional) | Indicates whether the attributes should be randomized or not. By default attributes are not randomized, they appear in a fixed order. Set this to `1` to have the attributes randomized |
 
 ### Examples
@@ -59,8 +60,8 @@ Examples of usage are:
 ## More resources
 
 * **Sample form**  
-This form will help you explore the differences between this field plug-in and the default text field.  
-[Download sample form](https://github.com/surveycto/baseline-select_one/raw/master/extras/test-form/test-form-package-baseline-select_one.zip)  
+This form will help you explore the features in this field plug-in.  
+[Download sample form](https://github.com/surveycto/conjoint/blob/master/extras/Sample%20form%20Conjoint%20Analysis.xlsx)  
 
 * **Developer documentation**  
 Instructions and resources for developing your own field plug-ins.  
