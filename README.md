@@ -13,7 +13,7 @@ This field plug-in is designed to help implement [Conjoint Analysis](https://en.
 
 ### Data format
 
-This field plug-in supports the `select_one` field type. The field stores a pipe (|) separated list of the the options presented to the respondant and the choice selected. For example: 
+This field plug-in supports the `text` field type. The field stores a pipe (|) separated list of the the options presented to the respondant and the choice selected. For example: 
 
 `Bread,Bagel,Hero|Cheese,Cheddar,Mozzarella|Greens,Spinach,Arugala|Meat,Portobello,Roast beef|Sauce,Mustard,Mayonnaise|Veggie,Pickles,Pickles|Option 1`
 
