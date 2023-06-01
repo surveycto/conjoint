@@ -126,7 +126,7 @@ function randomize(i) {
 
 // Perform the randomization and save it
 for (var i = 1; i <= numChoice; i++) {
-  if (currentAnswer !== null) {
+  if (currentAnswer != null) {
     recreateTable(i);
   } else {
     randomize(i);
