@@ -10,7 +10,9 @@ This field plug-in is designed to help implement [Conjoint Analysis](https://en.
 
 ### Features
 
-
+* Define various features (attributes) and their different possible states or degrees (levels)
+* Generates profiles consisting of random combinations of attribute levels
+* Allows for randomization of the order in which the attributes should be displayed
 
 ### Data format
 
@@ -32,6 +34,8 @@ Here, it means the options were presented as follows:
 And the selected option was `Option 1`.
 
 Each field will be presented this way.
+
+**NOTE** Ensure the field is `required` so the field can record the above information.
 
 ## How to use
 
