@@ -53,12 +53,13 @@ Each field will be presented this way.
 | `levels` | This should have two parts. The full string should include a pipe separated list of levels for each attribute. The levels for each attribute will be a comma separated list |
 | `labels` (Optional) | A comma separated list of labels. These will appear as table headers and as button labels. For now, there can only be two labels. The default labels are _Porfile 1_ and _Profile 2_. |
 | `randomize` (Optional) | Indicates whether the attributes should be randomized or not. By default attributes are not randomized, they appear in a fixed order. Set this to `1` to have the attributes randomized |
+| `bypass` (Optional) | Provides an option for users to choose none of the presented profiles by using a button. Initially, this button is hidden. However, when a value is assigned, this will trigger the display of a button labeled with the assigned value. |
 
 ### Examples
 
 Examples of usage are: 
 
-`custom-conjoint(attributes = ${attributes}, levels = ${levels_array}, labels=${labels})`
+`custom-conjoint(attributes = ${attributes}, levels = ${levels_array}, labels=${labels}, bypass='None of the above')`
 
 
 ## More resources
