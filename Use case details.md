@@ -5,7 +5,7 @@ This sample form demonstrates how to use the conjoint field plug-in to ease impl
 
 
 1. Bread
-2. Meat
+2. Protein
 3. Veggies
 
 These are what we refer to as **attributes**. You can have a number of options for each attribute. For example, you can have different *types of bread*: 
@@ -21,7 +21,7 @@ These are what we refer to as **attributes**. You can have a number of options f
 
 These are referred to as **levels**. Each attribute has one or more levels. The levels for each attribute are;
 
-*Meat:*
+*Protein:*
 
 
 
