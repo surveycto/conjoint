@@ -6,6 +6,9 @@ var tempResult = ""
 
 // Get attributes from form definition
 var loadFormAttributes = getPluginParameter('attributes')
+// Get attributes from form definition
+var loadByPass = getPluginParameter('bypass')
+
 // Convert loaded attributes into an array
 var attributeArray = loadFormAttributes.split(',')
 // Get randomize parameter from form definition
@@ -41,6 +44,14 @@ var header1 = document.getElementById('header1')
 header1.innerHTML = loadedLabels[0]
 var header2 = document.getElementById('header2')
 header2.innerHTML = loadedLabels[1]
+
+var bypass = document.getElementById('byPassButton')
+if (loadByPass == undefined) {
+  bypass.style.display = 'none'
+} else {
+  bypass.style.display = 'block'
+  bypass.innerText = loadByPass
+}
 
 var currentAnswer = fieldProperties.CURRENT_ANSWER
 
@@ -139,6 +150,7 @@ function addResult1() {
   setAnswer(result)
   button1.style.backgroundColor = "#4CAF50"
   button2.style.backgroundColor = "#008CBA"
+  bypass.style.backgroundColor = "#FE0000"
   // goToNextField()
 }
 
@@ -148,6 +160,17 @@ function addResult2() {
   setAnswer(result)
   button2.style.backgroundColor = "#4CAF50"
   button1.style.backgroundColor = "#008CBA"
+  bypass.style.backgroundColor = "#FE0000"
+  // goToNextField()
+}
+
+function pass() {
+  var result = ""
+  result = tempResult + loadByPass
+  setAnswer(result)
+  bypass.style.backgroundColor = "#4CAF50"
+  button1.style.backgroundColor = "#008CBA"
+  button2.style.backgroundColor = "#008CBA"
   // goToNextField()
 }
 
@@ -209,8 +232,11 @@ function recreateTable(i) {
 function disableButtons() {
   button1.disabled = true;
   button2.disabled = true;
+  bypass.disabled = true;
   button1.style.backgroundColor = "#e7e7e7"
   button2.style.backgroundColor = "#e7e7e7"
+  bypass.style.backgroundColor = "#e7e7e7"
   button1.style.color = "#555555"
   button2.style.color = "#555555"
+  bypass.style.color = "#555555"
 }

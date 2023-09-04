@@ -30,14 +30,14 @@ table.conjoint-table {
     border-collapse: collapse;
 }
 
-.conjoint-table th, td {
+.conjoint-table th, .conjoint-table td {
     border: 1px solid black;
     padding: 15px;
     text-align: center;
 }
 
-.cs-button {
-    background-color: #008CBA; /* Blue */
+/* .cs-button {
+    background-color: #008CBA;
     border: none;
     color: white;
     padding: 15px 32px;
@@ -46,5 +46,34 @@ table.conjoint-table {
     display: inline-block;
     font-size: 16px;
     border-radius: 4px;
+    cursor: pointer; 
+  } */
+
+  .button {
+    background-color: #008CBA;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 5px;
+    border-radius: 4px;
+    cursor: pointer; 
+  }
+
+  .span-button {
+    background-color: #FE0000;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    font-size: 16px;
+    margin-top: 5px;
+    border-radius: 4px;
+    width: 100%;
     cursor: pointer; 
   }
