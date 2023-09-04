@@ -4,7 +4,7 @@
 
 ## Description
 
-This field plug-in is designed to help implement (conjoint analysis)(https://en.wikipedia.org/wiki/Conjoint_analysis).
+This field plug-in is designed to help implement [conjoint analysis](https://en.wikipedia.org/wiki/Conjoint_analysis).
 
 [![Download now](extras/beta-release-download.jpg)](https://github.com/surveycto/conjoint/blob/master/conjoint.fieldplugin.zip)
 
