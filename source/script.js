@@ -188,9 +188,18 @@ function recreateTable(i) {
       if(currentAnswerArray[currentAnswerArray.length - 1] === loadedLabels[0]) {
         button1.innerHTML = loadedLabels[0]
         disableButtons()
+        button1.style.backgroundColor = "#595959"
+        button1.style.color = "#FFFAF0"
+      } else if(loadByPass != undefined && currentAnswerArray[currentAnswerArray.length - 1] === loadByPass) {
+        bypass.innerHTML = loadByPass
+        disableButtons()
+        bypass.style.backgroundColor = "#595959"
+        bypass.style.color = "#FFFAF0"
       } else {
         button2.innerHTML = loadedLabels[1]
         disableButtons()
+        button2.style.backgroundColor = "#595959"
+        button2.style.color = "#FFFAF0"
       }
     } else {
       var currentItem = currentAnswerArray[l].split(',')
