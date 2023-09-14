@@ -122,7 +122,8 @@ function randomize(i) {
     var option2 = document.createTextNode(s2[index])
     option2Cell.appendChild(option2)
 
-    k === 1 ? tempResult = attributeArray[index] + ',' + s1[index] + ',' + s2[index] + '|' : tempResult += attributeArray[index] + ',' + s1[index] + ',' + s2[index] + '|'
+    // k === 1 ? tempResult = attributeArray[index] + ',' + s1[index] + ',' + s2[index] + '|' : tempResult += attributeArray[index] + ',' + s1[index] + ',' + s2[index] + '|'
+    k === 1 ? tempResult = (attributeArray.indexOf(attributeArray[index]) + 1) + ',' +(levels[index].indexOf(s1[index]) + 1) + ',' + (levels[index].indexOf(s2[index]) + 1) + '|' : tempResult += (attributeArray.indexOf(attributeArray[index]) + 1) + ',' +(levels[index].indexOf(s1[index]) + 1) + ',' + (levels[index].indexOf(s2[index]) + 1) + '|'
 
     rowElement.appendChild(labelCell)
     rowElement.appendChild(option1Cell)
@@ -146,7 +147,8 @@ for (var i = 1; i <= numChoice; i++) {
 
 function addResult1() {
   var result = ""
-  result = tempResult + loadedLabels[0]
+  // result = tempResult + loadedLabels[0]
+  result = tempResult + 1
   setAnswer(result)
   button1.style.backgroundColor = "#4CAF50"
   button2.style.backgroundColor = "#008CBA"
@@ -156,7 +158,8 @@ function addResult1() {
 
 function addResult2() {
   var result = ""
-  result = tempResult + loadedLabels[1]
+  // result = tempResult + loadedLabels[1]
+  result = tempResult + 2
   setAnswer(result)
   button2.style.backgroundColor = "#4CAF50"
   button1.style.backgroundColor = "#008CBA"
@@ -166,7 +169,8 @@ function addResult2() {
 
 function pass() {
   var result = ""
-  result = tempResult + loadByPass
+  // result = tempResult + loadByPass
+  result = tempResult + 0
   setAnswer(result)
   bypass.style.backgroundColor = "#4CAF50"
   button1.style.backgroundColor = "#008CBA"
@@ -187,16 +191,19 @@ function recreateTable(i) {
     if (l === (currentAnswerArray.length - 1)) {
       if(currentAnswerArray[currentAnswerArray.length - 1] === loadedLabels[0]) {
         button1.innerHTML = loadedLabels[0]
+        // button1.innerHTML = 1
         disableButtons()
         button1.style.backgroundColor = "#595959"
         button1.style.color = "#FFFAF0"
       } else if(loadByPass != undefined && currentAnswerArray[currentAnswerArray.length - 1] === loadByPass) {
         bypass.innerHTML = loadByPass
+        // bypass.innerHTML = 0
         disableButtons()
         bypass.style.backgroundColor = "#595959"
         bypass.style.color = "#FFFAF0"
       } else {
         button2.innerHTML = loadedLabels[1]
+        // button2.innerHTML = 2
         disableButtons()
         button2.style.backgroundColor = "#595959"
         button2.style.color = "#FFFAF0"
@@ -206,13 +213,13 @@ function recreateTable(i) {
       var rowElement = document.createElement("TR");
       var labelCell = document.createElement("TD");
       var label = document.createElement("b");
-      label.innerHTML = currentItem[0]
+      label.innerHTML = attributeArray[currentItem[0] - 1] 
       labelCell.appendChild(label)
       var option1Cell = document.createElement("TD");
-      var option1 = document.createTextNode(currentItem[1])
+      var option1 = document.createTextNode(levels[l][currentItem[1]-1])
       option1Cell.appendChild(option1)
       var option2Cell = document.createElement("TD");
-      var option2 = document.createTextNode(currentItem[2])
+      var option2 = document.createTextNode(levels[l][currentItem[2]-1])
       option2Cell.appendChild(option2)
   
       rowElement.appendChild(labelCell)
