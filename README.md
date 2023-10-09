@@ -56,7 +56,7 @@ Each field will be presented this way.
 | `labels` (Optional) | A comma separated list of labels. These will appear as table headers and as button labels. For now, there can only be two labels. The default labels are _Porfile 1_ and _Profile 2_. |
 | `randomize` (Optional) | Indicates whether the attributes should be randomized or not. By default attributes are not randomized, they appear in a fixed order. Set this to `1` to have the attributes randomized. |
 | `bypass` (Optional) | Provides an option for users to choose none of the presented profiles by using a button. Initially, this button is hidden. However, when a value is assigned, this will trigger the display of a button labeled with the assigned value. |
-| `data_format` (Optional) | Give this a value `string` to store data as __strings__. Default is for the data to be stored as `numeric` format.  |
+| `data_format` (Optional) | The default behavior when this parameter is not specified is to store data as ordinal (numeric) values. However, you can also specify `data_format = 'string'` to store the string values supplied as `attributes` and `levels` instead. |
 
 ### Examples
 
