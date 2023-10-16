@@ -119,6 +119,7 @@ function randomize(i) {
     s2.push(shuffle_one(levels[c]))
   }
 
+  // Create table
   for(var k = 1; k <= attributeOrder.length; k++) {
     var index = attributeOrder[k - 1] - 1
     var rowElement = document.createElement("TR");
@@ -133,16 +134,10 @@ function randomize(i) {
     var option2 = document.createTextNode(s2[index])
     option2Cell.appendChild(option2)
 
-    if(dataFormat == 0) {
+    if(dataFormat == 0) { // Save as string
       k === 1 ? tempResult = attributeArray[index] + ',' + s1[index] + ',' + s2[index] + '|' : tempResult += attributeArray[index] + ',' + s1[index] + ',' + s2[index] + '|'
-    } else {
+    } else { // Save as numeric
       k === 1 ? tempResult = (attributeArray.indexOf(attributeArray[index]) + 1) + ',' +(levels[index].indexOf(s1[index]) + 1) + ',' + (levels[index].indexOf(s2[index]) + 1) + '|' : tempResult += (attributeArray.indexOf(attributeArray[index]) + 1) + ',' +(levels[index].indexOf(s1[index]) + 1) + ',' + (levels[index].indexOf(s2[index]) + 1) + '|'
-      // console.log('tempResult is ' + tempResult)
-      // console.log('attributeArray is ' + attributeArray)
-      // console.log('levels[index] is ' + levels[index])
-      // console.log('attributeArray[index] is ' + attributeArray[index])
-      // console.log('s1[index]  is ' + s1[index])
-      // console.log('s2[index] is ' + s2[index])
     }
   
     rowElement.appendChild(labelCell)
@@ -151,9 +146,6 @@ function randomize(i) {
 
     tableElement.appendChild(rowElement)
   }
-
-  // setMetaData(result)
-  // console.log(result)
 }
 
 // Perform the randomization and save it
@@ -165,6 +157,7 @@ for (var i = 1; i <= numChoice; i++) {
   }
 }
 
+//  Handle click events on button 1
 function addResult1() {
   var result = ""
   if(dataFormat == 0) {
@@ -179,6 +172,7 @@ function addResult1() {
   // goToNextField()
 }
 
+// Handle click events on button 2
 function addResult2() {
   var result = ""
   if(dataFormat == 0) {
@@ -193,6 +187,7 @@ function addResult2() {
   // goToNextField()
 }
 
+// Handle click events on bypass button
 function pass() {
   var result = ""
   if(dataFormat == 0) {
@@ -274,20 +269,7 @@ function recreateTable(i) {
   }
 }
 
-// Perform the randomization and save it
-// for (var i = 1; i <= numChoice; i++) {
-//   randomize(i);
-// }
-
-// function addResult1() {
-//   var result = ""
-//   result += loadedLabels[0]
-//   setAnswer(result)
-//   button1.style.backgroundColor = "#4CAF50"
-//   button2.style.backgroundColor = "#008CBA"
-//   // goToNextField()
-// }
-
+// Disable all buttons
 function disableButtons() {
   button1.disabled = true;
   button2.disabled = true;
