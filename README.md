@@ -19,22 +19,23 @@ For more details see the Support Center Guide on [how to conduct Conjoint Analys
 
 ### Data format
 
-This field plug-in supports the `text` field type. The field stores a pipe (|) separated list of the the options presented to the respondant and the choice selected. For example: 
+This field plug-in supports the `text` field type. The field stores a pipe (|) separated list of the ordinal representations of the options, as defined in the form. These are mapped to what is presented to the respondant and the choice selected. For example: 
 
-`Bread,Bagel,Hero|Cheese,Cheddar,Mozzarella|Greens,Spinach,Arugala|Protein,Portobello,Roast beef|Sauce,Mustard,Mayonnaise|Veggie,Pickles,Pickles|Option 1`
+`1,3,6|2,3,5|3,6,1|2`
 
 Here, it means the options were presented as follows: 
 
-|  | Option 1 | Option 2 |
+|  | Profile 1 | Profile 2 |
 | --- | --- | --- |
-| Bread | Bagel | Hero|
-| Cheese | Cheddar | Mozzarella |
-| Greens | Spinach | Arugala |
-| Protein | Portobello | Roast beef |
-| Sauce | Mustard | Mayonnaise |
-| Veggie | Pickles | Pickles |
+| Bread | Roll | Lettuce Wrap|
+| Protein | Turkey | Egg |
+| Veggie | Bean Sprouts | Tomato |
 
-And the selected option was `Option 1`.
+And the selected option was `Profile 2`.
+
+You can also store a `string` representation of the options using the `data_format` parameter. In this example, the data will be stored as: 
+
+`Bread,Roll,Lettuce wrap|Protein,Turkey,Egg|Veggie,Bean sprouts,Tomato|Profile 2`
 
 Each field will be presented this way.
 
@@ -55,6 +56,7 @@ Each field will be presented this way.
 | `labels` (Optional) | A comma separated list of labels. These will appear as table headers and as button labels. For now, there can only be two labels. The default labels are _Porfile 1_ and _Profile 2_. |
 | `randomize` (Optional) | Indicates whether the attributes should be randomized or not. By default attributes are not randomized, they appear in a fixed order. Set this to `1` to have the attributes randomized. |
 | `bypass` (Optional) | Provides an option for users to choose none of the presented profiles by using a button. Initially, this button is hidden. However, when a value is assigned, this will trigger the display of a button labeled with the assigned value. |
+| `data_format` (Optional) | The default behavior when this parameter is not specified is to store data as ordinal (numeric) values. However, you can also specify `data_format = 'string'` to store the string values supplied as `attributes` and `levels` instead. |
 
 ### Examples
 
