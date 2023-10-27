@@ -6,7 +6,7 @@
 
 This field plug-in is designed to help implement [conjoint analysis](https://en.wikipedia.org/wiki/Conjoint_analysis).
 
-(Add a brief summary of what conjoint analysis is, and how this field plug-in helps.)
+Conjoint analysis is a research technique used to understand how people make decisions based on various attributes of a product or service. It helps in determining which features are most important to consumers and how they trade off one attribute against another. This field plug-in displays a set of profile pairs, randomly combined based on attributes you provide, for respondents to select their favorite. Analyze the collected data to identify which attributes have the most influence.
 
 [![Download now](extras/beta-release-download.jpg)](https://github.com/surveycto/conjoint/blob/master/conjoint.fieldplugin.zip)
 
@@ -21,25 +21,23 @@ For more details see the Support Center Guide [How to conduct Conjoint Analysis 
 
 ### Data format
 
-The field stores a pipe (`|`) separated list of the ordinal representations of the options, as defined in the form. These are mapped to what is presented to the respondant and the choice selected. For example:
-
-(What is each item in the list? And what do the numbers mean? And why is the 2 at the end by itself?)
+The field stores a pipe (`|`) separated list of the ordinal representations of the options, as defined in the form. These are mapped to what is presented to the respondant and the choice selected. For example the result might be:
 
     1,3,6|2,3,5|3,6,1|2
 
-(What's the point of starting with 1, 2, and 3 in each item of the list if those are always going to be the same? Instead, I would have the data format be like this:
+The string representation of this would be:
 
-    3,3,6|6,5,1|2
+`Bread,Roll,Lettuce wrap|Protein,Turkey,Egg|Veggie,Bean sprouts,Tomato|Profile 2`
 
-Here is the string version:
+Each item (separated by a pipe (`|`)) in the list represents a row in the table generated. So the item: 
 
-    Roll,Turkey,Bean sprouts|Lettuce wrap,Egg,Tomato|Profile 2
+ 1,3,6 or its string representation `Bread,Roll,Lettuce wrap` represents a row in the table. This can be further broken down into:
 
-That way, it is clear that the first item in the list is the first profile, the second item in the list is the second profile, and the third item in the list is which profile was selected.
+ - `1` (Bread) - the attribute
+ - `3` (Roll) - the attribute level generated for the first profile
+ - `6` (Lettuce warp) - the attribute level generated for the second profile
 
-)
-
-Here, it means the options were presented as follows: 
+Following this logic, it means the options were presented as follows: 
 
 |  | Profile 1 | Profile 2 |
 | --- | --- | --- |
@@ -49,11 +47,7 @@ Here, it means the options were presented as follows:
 
 And the selected option was `Profile 2`.
 
-You can also store a `string` representation of the options using the `data_format` parameter. In this example, the data will be stored as: 
-
-`Bread,Roll,Lettuce wrap|Protein,Turkey,Egg|Veggie,Bean sprouts,Tomato|Profile 2`
-
-Each field will be presented this way.
+By default, the numeric representation is what is stored but you can also store a `string` representation of the options using the `data_format` parameter. Each field will be presented this way.
 
 ## How to use
 
@@ -80,12 +74,7 @@ Each field will be presented this way.
 
 Here is an example *appearance* for your *text* field that uses this field plug-in: 
 
-    custom-conjoint(attributes = ${attributes},
-    levels = ${levels_array},
-    labels=${labels},
-    bypass='None of the above')
-
-(I would not use field references, but write everything out, so the user knows what everything should really look like without having to open the form/)
+    `custom-conjoint(attributes = 'Bread,Protein,Veggies', levels = 'Bagel,Hero,Roll,Sliced white|Ham,Roast beef,Turkey|Tomato,Jalapenos,Roasted peppers,Onion' labels='Option 1, Option 2',bypass='None of the above')`
 
 ## More resources
 

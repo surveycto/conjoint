@@ -22,22 +22,25 @@
 {{/MEDIAVIDEO}}
 
 <div class="hint default-hint-text-size" dir="auto">{{{HINT}}}</div>
-<table id="conjoint_table_1" class="conjoint-table">
-  <tr>
-    <th></th>
-    <th id="header1"><b></b></th>
-    <th id="header2"><b></b></th>
-  </tr>
-</table>
-<br>
-<div>
-  <table>
+
+<center>
+  <table id="conjoint_table_1" class="conjoint-table">
     <tr>
-      <td><button id="button1" onclick="addResult1()" class="button">Button 1</button></td>
-      <td><button id="button2" onclick="addResult2()" class="button">Button 2</button></td>
-    </tr>
-    <tr>
-      <td colspan="2"><button id="byPassButton" onclick="pass()" class="span-button">Button 3 (Spanning)</button></td>
+      <th></th>
+      <th id="header1"><b></b></th>
+      <th id="header2"><b></b></th>
     </tr>
   </table>
-</div>
+  <br>
+  <div>
+    <table>
+      <tr>
+        <td><button id="button1" onclick="addResult1()" class="button">Button 1</button></td>
+        <td><button id="button2" onclick="addResult2()" class="button">Button 2</button></td>
+      </tr>
+      <tr>
+        <td colspan="2"><button id="byPassButton" onclick="pass()" class="span-button">Button 3 (Spanning)</button></td>
+      </tr>
+    </table>
+  </div>
+</center>
