@@ -31,7 +31,7 @@ The string representation of this would be:
 
 Each item (separated by a pipe (`|`)) in the list represents a row in the table generated. So the item: 
 
- 1,3,6 or its string representation `Bread,Roll,Lettuce wrap` represents a row in the table. This can be further broken down into:
+ `1,3,6` or its string representation `Bread,Roll,Lettuce wrap` represents a row in the table. This can be further broken down into:
 
  - `1` (Bread) - the attribute
  - `3` (Roll) - the attribute level generated for the first profile
@@ -68,13 +68,14 @@ By default, the numeric representation is what is stored but you can also store 
 | `bypass` (Optional) | Provides an option for users to choose none of the presented profiles by using a button. Initially, this button is hidden. However, when a value is assigned, this will trigger the display of a button labeled with the assigned value. (What does the value of this signify? Is it the value assigned to the field when it is bypassed?) |
 | `data_format` (Optional) | The default behavior of the field plug-in is for the field value to store the ordinal (numeric) values of the attributes and levels. However, if you use this parameter to specify `data_format = 'string'`, then the field plug-in will store the string values instead, as supplied by the `attributes` and `levels` parameters. |
 
-(There should be a lot more detail on the format of attributes, and levels, including how they relate to each other.)
-
 ### Examples
 
 Here is an example *appearance* for your *text* field that uses this field plug-in: 
 
-    `custom-conjoint(attributes = 'Bread,Protein,Veggies', levels = 'Bagel,Hero,Roll,Sliced white|Ham,Roast beef,Turkey|Tomato,Jalapenos,Roasted peppers,Onion' labels='Option 1, Option 2',bypass='None of the above')`
+    `custom-conjoint( attributes = 'Bread,Protein,Veggies', 
+        levels = 'Bagel,Hero,Roll,Sliced white|Ham,Roast beef,Turkey|Tomato,Jalapenos,Roasted peppers,Onion' 
+        labels='Option 1, Option 2',
+        bypass='None of the above')`
 
 ## More resources
 
