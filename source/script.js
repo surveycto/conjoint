@@ -2,7 +2,7 @@
 
 // Set number of choices
 var numChoice = 1
-var tempResult = ""
+var tempResult = ''
 
 // Get attributes from form definition
 var loadFormAttributes = getPluginParameter('attributes')
@@ -11,7 +11,7 @@ var loadByPass = getPluginParameter('bypass')
 // Get data format from form definition
 var loadedDataFormat = getPluginParameter('data_format')
 // Use 0 for string, 1 for numeric
-if (loadedDataFormat == "string") {
+if (loadedDataFormat == 'string') {
   var dataFormat = 0
 } else {
   var dataFormat = 1
