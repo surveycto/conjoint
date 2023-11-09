@@ -31,13 +31,13 @@ The string representation of this would be:
 
 Each item (separated by a pipe (`|`)) in the list represents a row in the table generated. So the item: 
 
- `1,3,6` or its string representation `Bread,Roll,Lettuce wrap` represents a row in the table. This can be further broken down into:
-
+ `1,3,6` or its string representation `Bread,Roll,Lettuce wrap` represents a row in the table. Within this item, components are delineated by commas (`,`). The initial component denotes the attribute, followed by two additional components that represent the randomly generated values for that attribute, specific to each individual profile. So in our example:
+ 
  - `1` (Bread) - the attribute
  - `3` (Roll) - the attribute level generated for the first profile
  - `6` (Lettuce warp) - the attribute level generated for the second profile
 
-Following this logic, it means the options were presented as follows: 
+The last item in the field represents the selected profile. Following this logic, it means the options were presented as follows: 
 
 |  | Profile 1 | Profile 2 |
 | --- | --- | --- |
