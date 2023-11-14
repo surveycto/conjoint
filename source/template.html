@@ -2,39 +2,36 @@
 
 <!-- If there is an image specified in the media:image column, show it here -->
 {{#MEDIAIMAGE}}
-    <img src="{{MEDIAIMAGE}}" />
+<img src="{{MEDIAIMAGE}}" />
 {{/MEDIAIMAGE}}
 
 <!-- If there is audio specified in the media:audio column, show it here -->
 {{#MEDIAAUDIO}}
-    <audio controls controlsList="nodownload">
-        <source src="{{MEDIAAUDIO}}">
-        Your browser does not support the audio element.
-    </audio>
+<audio controls controlsList="nodownload">
+  <source src="{{MEDIAAUDIO}}">
+  Your browser does not support the audio element.
+</audio>
 {{/MEDIAAUDIO}}
 
 <!-- If there is a video specified in the media:video column, show it here -->
 {{#MEDIAVIDEO}}
-    <video width="100%" height="*" controls controlsList="nodownload">
-        <source src="{{MEDIAVIDEO}}">
-        Your browser does not support the video tag.
-    </video>
+<video width="100%" height="*" controls controlsList="nodownload">
+  <source src="{{MEDIAVIDEO}}">
+  Your browser does not support the video tag.
+</video>
 {{/MEDIAVIDEO}}
 
 <div class="hint default-hint-text-size" dir="auto">{{{HINT}}}</div>
+
 <center>
-<table id="conjoint_table_1" class="conjoint-table">
-  <tr>
-    <th></th>
-    <!-- Replace text between <b> with text of choice names -->
-    <th id="header1"><b></b></th>
-    <th id="header2"><b></b></th>
-  </tr>
-</table>
-<br>
-<!-- 
-  <button id="button1" onclick="addResult1()" class="cs-button"></button>
-  <button id="button2" onclick="addResult2()" class="cs-button"></button> -->
+  <table id="conjoint_table_1" class="conjoint-table">
+    <tr>
+      <th></th>
+      <th id="header1"><b></b></th>
+      <th id="header2"><b></b></th>
+    </tr>
+  </table>
+  <br>
   <div>
     <table>
       <tr>
@@ -46,10 +43,4 @@
       </tr>
     </table>
   </div>
-
-  <!-- <a href="https://button.1.com/" class="scto-button">Button 1</a>
-  
-  <a href="https://button.2.com/" class="scto-button">Button 2</a> -->
-  
 </center>
-
