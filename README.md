@@ -4,7 +4,7 @@
 
 ## Description
 
-This field plug-in is designed to help implement [conjoint analysis](https://en.wikipedia.org/wiki/Conjoint_analysis).
+This field plug-in is designed to help implement [conjoint analysis](https://en.wikipedia.org/wiki/Conjoint_analysis) also known as [Discrete Choice Modeling](https://en.wikipedia.org/wiki/Discrete_choice).
 
 Conjoint analysis is a research technique used to understand how people make decisions based on various attributes of a product or service. It helps in determining which features are most important to consumers and how they trade off one attribute against another. This field plug-in displays a set of profile pairs, randomly combined based on attributes you provide, for respondents to select their favorite. Analyze the collected data to identify which attributes have the most influence.
 
