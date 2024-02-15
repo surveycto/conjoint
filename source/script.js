@@ -2,7 +2,8 @@
 
 // Set number of choices
 var numChoice = 1
-var tempResult = ''
+var tempResult = '' // Holds the temporary result
+var stringResult = '' // Holds the string result stored as meta data - useful for rebuilding the table.
 
 // Set colors
 var DARK_GREY = '#555555'
@@ -72,6 +73,7 @@ if (loadByPass == undefined) {
 
 // Retrieve current answer
 var currentAnswer = fieldProperties.CURRENT_ANSWER
+var metadata = getMetaData() // Retrieve metadata
 
 // Perform the randomization and save it
 for (var i = 1; i <= numChoice; i++) {
@@ -115,6 +117,7 @@ function randomize(i) {
   // Active if attributes are to be shown randomly. 
   if(randomizeAttributes) {
     shuffle(attributeOrder)
+    var attributeOrderString = attributeOrder.join(',');
   }
    
   var s1 = []
@@ -139,6 +142,8 @@ function randomize(i) {
     var option2 = document.createTextNode(s2[index])
     option2Cell.appendChild(option2)
 
+    k === 1 ? stringResult = attributeArray[index] + ',' + s1[index] + ',' + s2[index] + '|' : stringResult += attributeArray[index] + ',' + s1[index] + ',' + s2[index] + '|'
+
     if(dataFormat == 0) { // Save as string
       k === 1 ? tempResult = attributeArray[index] + ',' + s1[index] + ',' + s2[index] + '|' : tempResult += attributeArray[index] + ',' + s1[index] + ',' + s2[index] + '|'
     } else { // Save as numeric
@@ -153,6 +158,8 @@ function randomize(i) {
   }
 }
 
+console.log('String result: ' + stringResult)
+console.log('Temp result: ' + tempResult)
 //  Handle click events on button 1
 function addResult1() {
   var result = ''
@@ -161,6 +168,7 @@ function addResult1() {
   } else {
     result = tempResult + 1
   }
+  setMetaData(stringResult)
   setAnswer(result)
   button1.style.backgroundColor = GREEN
   button2.style.backgroundColor = BLUE
@@ -175,6 +183,7 @@ function addResult2() {
   } else {
     result = tempResult + 2
   }
+  setMetaData(stringResult)
   setAnswer(result)
   button2.style.backgroundColor = GREEN
   button1.style.backgroundColor = BLUE
@@ -189,6 +198,7 @@ function pass() {
   } else {
     result = tempResult + 0
   }
+  setMetaData(stringResult)
   setAnswer(result)
   bypass.style.backgroundColor = GREEN
   button1.style.backgroundColor = BLUE
@@ -203,6 +213,7 @@ function recreateTable(i) {
   result = currentAnswer 
   // Keep the same answer for the result
   var currentAnswerArray = currentAnswer.split('|')
+  var metaDataArray = metadata.split('|')
 
   for(var l = 0; l < currentAnswerArray.length; l++) {
     if (l === (currentAnswerArray.length - 1)) {
@@ -225,27 +236,28 @@ function recreateTable(i) {
       }
     } else {
       var currentItem = currentAnswerArray[l].split(',')
+      var currentMetaItem = metaDataArray[l].split(',')
       var rowElement = document.createElement('tr')
       var labelCell = document.createElement('td')
       var label = document.createElement('strong')
       if(dataFormat == 0) {
         label.innerHTML = currentItem[0]
       } else {
-        label.innerHTML = attributeArray[currentItem[0] - 1] 
+        label.innerHTML = currentMetaItem[0] //attributeArray[currentItem[0] - 1] 
       }
       labelCell.appendChild(label)
       var option1Cell = document.createElement('td')
       if(dataFormat == 0) {
         var option1 = document.createTextNode(currentItem[1])
       } else {
-        var option1 = document.createTextNode(levels[l][currentItem[1]-1])
+        var option1 = document.createTextNode(currentMetaItem[1]) //(levels[l][currentItem[1]-1])
       }
       option1Cell.appendChild(option1)
       var option2Cell = document.createElement('td')
       if(dataFormat == 0) {
         var option2 = document.createTextNode(currentItem[2])
       } else {
-        var option2 = document.createTextNode(levels[l][currentItem[2]-1])
+        var option2 = document.createTextNode(currentMetaItem[2]) //(levels[l][currentItem[2]-1])
       }
       option2Cell.appendChild(option2)
   
