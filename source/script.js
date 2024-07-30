@@ -122,10 +122,19 @@ function randomize(i) {
    
   var s1 = []
   var s2 = []
-  for (var c = 0; c < attributeLevels.length; c++) {
-    s1.push(shuffle_one(levels[c]))
-    s2.push(shuffle_one(levels[c]))
-  }
+
+  do {
+    s1 = [];
+    s2 = [];
+    for (var c = 0; c < attributeLevels.length; c++) {
+      s1.push(shuffle_one(levels[c]));
+      s2.push(shuffle_one(levels[c]));
+    }
+  } while (areProfilesIdentical(s1, s2));
+  // for (var c = 0; c < attributeLevels.length; c++) {
+  //   s1.push(shuffle_one(levels[c]))
+  //   s2.push(shuffle_one(levels[c]))
+  // }
 
   // Create table
   for(var k = 1; k <= attributeOrder.length; k++) {
@@ -281,4 +290,13 @@ function disableButtons() {
   button1.style.color = DARK_GREY
   button2.style.color = DARK_GREY
   bypass.style.color = DARK_GREY
+}
+
+function areProfilesIdentical(profile1, profile2) {
+  for (var i = 0; i < profile1.length; i++) {
+    if (profile1[i] !== profile2[i]) {
+      return false;
+    }
+  }
+  return true;
 }

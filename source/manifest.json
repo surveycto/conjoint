@@ -1,7 +1,7 @@
 {
 	"name" : "Conjoint Analysis",
 	"author" : "Dobility",
-	"version": "1.0.31",
+	"version": "1.1.0",
 	"supportedFieldTypes": ["text"],
 	"hideDefaultRequiredMessage": false,
 	"hideDefaultConstraintMessage": false
